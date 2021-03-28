@@ -97,13 +97,13 @@ public class StickDrive extends CommandBase {
 		double vY = -driver.getY();
 		double vRot = 0;
 		double joyX = driver.getX();
-		double joyRot = driver.getRawAxis(4)*.95;
+		double joyRot = driver.getRawAxis(4)*.8575;
 		boolean veering = false;
 
 		if(Robot.robotContainer.fullspeedy.get() == true)
 		{
 		  vY = .75;
-		  joyX = 0;
+		  //joyX = 0;
 		  joyRot = 0;
 		}
 	
@@ -117,6 +117,7 @@ public class StickDrive extends CommandBase {
 			vRot = joyRot;
 			veering = false;
 		}
+		
 
 
 		if (!driver.getRawButton(1)) {

@@ -27,22 +27,29 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Autonomous.CPRotate;
 import frc.robot.Autonomous.CPToColor;
-import frc.robot.Autonomous.Initiation70inch;
-import frc.robot.Autonomous.StraightDump;
+//import frc.robot.Autonomous.Initiation70inch;
+//import frc.robot.Autonomous.StraightDump;
 import frc.robot.commands.ArmGoToPosition;
 import frc.robot.commands.AutoRotate;
 import frc.robot.commands.DriveDistance;
-import frc.robot.commands.IndexingFunnel;
+import frc.robot.commands.FunnelCommand;
+//import frc.robot.commands.IndexingFunnel;
 import frc.robot.commands.LevelingLift;
 import frc.robot.commands.LiftManual;
-import frc.robot.commands.ManualSliderFunnel;
+import frc.robot.commands.Music;
+import frc.robot.commands.ShooterCommand;
+//import frc.robot.commands.ManualSliderFunnel;
 import frc.robot.commands.StickDrive;
+import frc.robot.commands.TurretCommand;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Funnel;
 import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ControlPanel.ControlPosition;
 import frc.robot.subsystems.Funnel.FunnelState;
 import frc.robot.subsystems.Lift.LiftMotion;
+import frc.robot.subsystems.Shooter.ShooterState;
+import frc.robot.subsystems.Shooter.TurretState;
 
 
 
@@ -57,10 +64,10 @@ public class RobotContainer {
     public static Funnel funnel = Robot.funnel;
     //private final Lift2 Lift2 = Robot.Lift2;
     private final Lift lift = Robot.Lift;
-
+    private final Shooter shooty = Robot.Shooter;
     private final StickDrive stickDrive = new StickDrive(drive);
 
-    private final ManualSliderFunnel manFunnel = new ManualSliderFunnel();
+    //private final ManualSliderFunnel manFunnel = new ManualSliderFunnel();
 
 
 
@@ -79,24 +86,18 @@ public class RobotContainer {
     //public JoystickButton rotate180;
     //public JoystickButton rotateNeg90;
 
+    public JoystickButton Shoot;
+    public JoystickButton Collect;
+    public JoystickButton Spin;
+    public JoystickButton ReverseSpin;
+    public JoystickButton Dumpy;
+
     public JoystickButton drive10;
     public JoystickButton driveNeg10;
     public JoystickButton drive20;
 
     public JoystickButton funnelIntake;
     public JoystickButton funnelOuttake;
-
-    public JoystickButton liftUp;
-    public JoystickButton liftDown;
-    public JoystickButton altLiftDown;
-
-
-    public JoystickButton cpUpTest;
-    public JoystickButton cpDownTest;
-
-    public JoystickButton test1;
-    public JoystickButton test2;
-
     public JoystickButton fullspeedy;
 
 
@@ -113,10 +114,8 @@ public class RobotContainer {
         //Lift2.setDefaultCommand(new STOP2());
         //Lift.setDefaultCommand(new STOP());
         lift.setDefaultCommand(new LiftManual(LiftMotion.STOP));
-      
-        //funnel.setDefaultCommand(new IndexingFunnel(FunnelState.STOP));
-        funnel.setDefaultCommand(manFunnel);
-      
+        funnel.setDefaultCommand(new FunnelCommand(FunnelState.Stop, 0));
+        shooty.setDefaultCommand(new Music());
         configureButtonBindings();
       
     }
@@ -133,15 +132,18 @@ public class RobotContainer {
         //rotate0 = new JoystickButton(driveStick, 7);
         //rotate90 = new JoystickButton(driveStick, 8);
         //rotate180 = new JoystickButton(driveStick, 10);
-        //rotateNeg90 = new JoystickButton(driveStick, 9);
+        //rotateNeg90 = new JoystickButton(dri
 
         drive10 = new JoystickButton(driveStick, 9);
         drive20 = new JoystickButton(driveStick, 7);
         driveNeg10 = new JoystickButton(driveStick, 10);
 
         fullspeedy = new JoystickButton(driveStick, 1);
-
-
+        Shoot = new JoystickButton(driveStick, 5);
+        Collect = new JoystickButton(driveStick, 6);
+        Spin = new JoystickButton(driveStick, 3);
+        Dumpy = new JoystickButton(driveStick, 4);
+        ReverseSpin = new JoystickButton(driveStick, 7);
         //Funnel Button Bindings
         funnelIntake = new JoystickButton(driveStick, 12);
         funnelOuttake = new JoystickButton(driveStick, 11);
@@ -150,18 +152,8 @@ public class RobotContainer {
         //cpRotate = new JoystickButton(driveStick, 3);
         //cpColor = new JoystickButton(driveStick, 4);
 
-        cpUpTest = new JoystickButton(arduino, 2);
-        cpDownTest = new JoystickButton(arduino, 1);
-      
-        //Lift Button Bindings
-        liftUp = new JoystickButton(driveStick, 8);
-        liftDown = new JoystickButton(driveStick, 7);
-        altLiftDown = new JoystickButton(driveStick, 2);
-
-
         //Test Button Bindings
-        test1 = new JoystickButton(arduino, 3);
-        test2 = new JoystickButton(arduino, 4);
+
         
 
 
@@ -170,24 +162,25 @@ public class RobotContainer {
         //rotate180.whenPressed(new AutoRotate(180).withTimeout(5));
         //rotateNeg90.whenPressed(new AutoRotate(-90).withTimeout(5));
 
-        drive10.whenPressed(new DriveDistance(20).withTimeout(5));
-        drive20.whenPressed(new DriveDistance(40).withTimeout(5));
-        driveNeg10.whenPressed(new DriveDistance(-20).withTimeout(5));
+       // drive10.whenPressed(new DriveDistance(20).withTimeout(5));
+       // drive20.whenPressed(new DriveDistance(40).withTimeout(5));
+       // driveNeg10.whenPressed(new DriveDistance(-20).withTimeout(5));
 
 
       
 
         //Funnel button actions
-        funnelIntake.whileHeld(new IndexingFunnel(FunnelState.COLLECT));
-        funnelOuttake.whileHeld(new IndexingFunnel(FunnelState.DUMP));
+        //funnelIntake.whileHeld(new IndexingFunnel(FunnelState.COLLECT));
+        //funnelOuttake.whileHeld(new IndexingFunnel(FunnelState.DUMP));
 
+        Collect.whileHeld(new FunnelCommand(FunnelState.Collect, 0.4));
+        Shoot.whileHeld(new ShooterCommand(ShooterState.Shoot));
+        Spin.whileHeld(new TurretCommand(TurretState.Spin));
+        Dumpy.whileHeld(new FunnelCommand(FunnelState.Remove, 0.4));
+        ReverseSpin.whileHeld(new TurretCommand(TurretState.ReverseSpin));
         //Control Panel button actions
         //cpRotate.whenPressed(new CPRotate());
         //cpColor.whenPressed(new CPToColor());
-      
-        cpUpTest.whenPressed(new ArmGoToPosition(ControlPosition.UP));
-        cpDownTest.whenPressed(new ArmGoToPosition(ControlPosition.DOWN));
-
       
         //Lift button actions
 
@@ -195,14 +188,7 @@ public class RobotContainer {
         //altLiftDown.whileHeld(new LiftManual(LiftMotion.DOWN));
 
 
-        liftUp.whileHeld(new LevelingLift(LiftMotion.UP));
-        liftDown.whileHeld(new LevelingLift(LiftMotion.DOWN));
-
-
         //Test button actions
-        test1.whenPressed(new DriveDistance(50));
-        test2.whenPressed(new DriveDistance(-50));
-
         
         
        

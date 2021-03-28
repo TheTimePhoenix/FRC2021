@@ -22,14 +22,15 @@ public class SetTurn extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
          
-    new M_IMU_DRIVE(125, 0, .6, 7),
-    new M_LOOP_DRIVE_FRC(20, .3, 1, 15, 1),
-    new M_IMU_DRIVE(72, 0, .6, 7),
-    new M_LOOP_DRIVE_FRC(20, .3, 0, 10, .87),
-    new M_IMU_DRIVE(75, 38, .6, 7),
-    new M_LOOP_DRIVE_FRC(20, .3, 0, 10, .59),
-    new M_IMU_DRIVE(240, 180, .7, 7)
+    new M_IMU_DRIVE(118, 0, .6, 7),
+    new M_LOOP_DRIVE_FRC(20, .45, 1, 5, 1.01),
+    new M_IMU_DRIVE(90, 0, .6, 7),
+    new M_LOOP_DRIVE_FRC(20, .45, 0, 5, .93),
+    new M_IMU_DRIVE(112, 44, .6, 7),
+    new M_LOOP_DRIVE_FRC(20, .45, 0, 5, .68),
+    new M_IMU_DRIVE(260, 180, .7, 7)
     /* 
+
     new M_ENCODER_DRIVE_FRC(110, .5, 3),
     new M_IMU_TURN_FRC(.5, 0, 2),
     new M_ENCODER_DRIVE_FRC(130, .5, 3),

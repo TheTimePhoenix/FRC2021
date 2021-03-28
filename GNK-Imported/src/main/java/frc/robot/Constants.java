@@ -2,7 +2,11 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANEncoder;
@@ -14,11 +18,15 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj.I2C;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SPI;
@@ -66,17 +74,17 @@ public class Constants {
 
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
-    
 
 
-
-    public static WPI_TalonSRX roller1;
-    public static WPI_TalonSRX roller2;
-    public static WPI_TalonSRX roller3;
-    public static WPI_TalonSRX roller4;
-    public static WPI_TalonSRX roller5;
-
-    public static WPI_TalonSRX intakeMotor;
+    public static TalonFX Shooter1;
+    public static TalonFX Shooter2;
+    public static Orchestra TalonMusic;
+    public static TalonSRX Turret;
+    public static TalonSRX ShooterRoller;
+    public static TalonSRX Roller1;
+    public static VictorSPX Roller2;
+    public static VictorSPX Intake;
+    //public static WPI_TalonSRX intakeMotor;
     public static WPI_TalonSRX cpArm;
 
     public static ColorSensorV3 colorSensor;
@@ -87,17 +95,15 @@ public class Constants {
     public final static Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
     public final static Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
-    public static AnalogInput ir1;
-    public static AnalogInput ir2;
-    public static AnalogInput ir3;
-    public static AnalogInput ir4;
-    public static AnalogInput ir5;
+    public static AnalogInput Stage1;
+    public static AnalogInput Stage2;
+    public static AnalogInput Stage3;
+    public static AnalogInput Ramp;
 
     private static final double driveRampRate = .25;
 
     public final static double encoderConversionInches = 1 / (.51 / 10); // inverse of ticks per inch
     public final static double encoderConversionMeters = 1 / (2.0078);
-
 
     public static void init() {
 
@@ -110,6 +116,8 @@ public class Constants {
         cpArmInit();
 
         liftInit();
+
+        shoooterInit();
 
     }
 
@@ -160,41 +168,61 @@ public class Constants {
 
         rightEncoder = spark4.getAlternateEncoder(kAltEncType, kCPR);
         rightEncoder.setPositionConversionFactor(6*3.1415);
+
+    
        
+    }
+    static void shoooterInit()
+    {
+        Shooter1 = new TalonFX(1);
+        Shooter2 = new TalonFX(2);
+        Turret = new TalonSRX(3);
+        ShooterRoller = new TalonSRX(4);
+        TalonMusic = new Orchestra();
+        Ramp = new AnalogInput(3);
+
+        Shooter1.setNeutralMode(NeutralMode.Coast);
+        Shooter2.setNeutralMode(NeutralMode.Coast);
+        ShooterRoller.setNeutralMode(NeutralMode.Brake);
+        Shooter1.setInverted(true);
+        Shooter2.setInverted(false);
+
+        Turret.setNeutralMode(NeutralMode.Coast);
+        Turret.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 30);
+        Turret.setSensorPhase(true);
+        Turret.configNominalOutputForward(0, 30);
+        Turret.configNominalOutputReverse(0, 30);
+        Turret.configPeakOutputForward(.3, 30);
+        Turret.configPeakOutputReverse(-.3, 30);
+        Turret.config_kF(0, 0, 30);
+        Turret.config_kP(0, 0.6, 30);
+        Turret.config_kI(0, 0, 30);
+        Turret.config_kD(0, 1,30);
+        Turret.configAllowableClosedloopError(0, 0, 30);
+
+        TalonMusic.addInstrument(Shooter1);
+        TalonMusic.addInstrument(Shooter2);  
+        
+        TalonMusic.loadMusic("NyanCat.chrp");
     }
 
     static void funnelInit() {
 
-        roller1 = new WPI_TalonSRX(1);
-        roller2 = new WPI_TalonSRX(2);
-        roller3 = new WPI_TalonSRX(3);
-        roller4 = new WPI_TalonSRX(4);
-        roller5 = new WPI_TalonSRX(5);
+        Roller1 = new TalonSRX(5);
+        Roller2 = new VictorSPX(6);
+        Intake = new VictorSPX(7);
 
-        intakeMotor = new WPI_TalonSRX(6);
+        Roller1.setNeutralMode(NeutralMode.Brake);
+        Roller2.setNeutralMode(NeutralMode.Brake);
+        Intake.setNeutralMode(NeutralMode.Brake);
 
-        roller1.setNeutralMode(NeutralMode.Brake);
-        roller2.setNeutralMode(NeutralMode.Brake);
-        roller3.setNeutralMode(NeutralMode.Brake);
-        roller4.setNeutralMode(NeutralMode.Brake);
-        roller5.setNeutralMode(NeutralMode.Brake);
+        Roller1.setInverted(true);
+        Roller2.setInverted(false);
+        Intake.setInverted(false);
 
-        intakeMotor.setNeutralMode(NeutralMode.Brake);
-
-        roller1.setInverted(true);
-        roller2.setInverted(false);
-        roller3.setInverted(true);
-        roller4.setInverted(true);
-        roller5.setInverted(true);
-
-        intakeMotor.setInverted(true);
-
-        ir1 = new AnalogInput(0);
-        ir2 = new AnalogInput(1);
-        ir3 = new AnalogInput(2);
-        ir4 = new AnalogInput(3);
-        ir5 = new AnalogInput(6);
-
+        Stage1 = new AnalogInput(0);
+        Stage2 = new AnalogInput(1);
+        Stage3 = new AnalogInput(2);
     }
 
     static void cpArmInit() {

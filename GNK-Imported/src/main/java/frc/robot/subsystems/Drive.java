@@ -127,13 +127,13 @@ public class Drive extends SubsystemBase {
             speeddirection = 1;
         }
             
-                if(Math.abs(angleError) > 10)
+                if(Math.abs(angleError) > 25)
                 {
                     speed = speed;
                 }    
                 else
                 {
-                    speed = (Math.abs(angleError)/10)*speed*.8;
+                    speed = (Math.abs(angleError)/25)*speed*.8;
 
                     if(speed < .2)
                     {
@@ -228,7 +228,7 @@ public class Drive extends SubsystemBase {
        double rightspeed = 0;
 
        error = getError(angle);
-       steer = getSteer(error, .015);
+       steer = getSteer(error, .005);
 
                if(target>CountstoInch(5))
                {
@@ -249,8 +249,17 @@ public class Drive extends SubsystemBase {
                     speed = .2;
                 }
             }
-            leftspeed = speed - steer;
-            rightspeed = speed + steer;
+
+            if(speeddirection == -1)
+            {
+                leftspeed = speed - steer;
+                rightspeed = speed + steer;
+            }
+            else
+            {
+                leftspeed = speed + steer;
+                rightspeed = speed - steer;
+            }
             
             SmartDashboard.putNumber("Distance Traveled", CountstoInch(1));
             SmartDashboard.putNumber("Timeout", period.get());
@@ -270,13 +279,19 @@ public class Drive extends SubsystemBase {
         double outer_circle_radius = inner_circle_radius + 22 + radius_offset;
         double new_speed =  outer_circle_radius/inner_circle_radius*speed;
 
-        if(direction == 0)
+
+        if(direction == 0 || direction == 3)
         {
             position = CountstoInch(3);
         }
         else
         {
             position = CountstoInch(1);
+        }
+
+        if(direction == 2 || direction == 3)
+        {
+            target = target*-1 ;
         }
 
         
@@ -317,6 +332,14 @@ public class Drive extends SubsystemBase {
                    else if(direction == 1)
                    {
                     robotDrive.tankDrive(speed*speeddirection, new_speed*speeddirection);
+                   }
+                   else if(direction == 2)
+                   {
+                    robotDrive.tankDrive(speed*speeddirection, new_speed*speeddirection);
+                   }
+                   else if(direction == 3)
+                   {
+                    robotDrive.tankDrive(new_speed*speeddirection, speed*speeddirection);
                    }
                    
                    SmartDashboard.putNumber("Distance Traveled", position);
