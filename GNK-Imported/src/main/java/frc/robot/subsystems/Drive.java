@@ -7,15 +7,15 @@ import frc.robot.RobotPreferences;
 //import jdk.javadoc.internal.tool.Start;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import javax.lang.model.util.ElementScanner6;
+//import javax.lang.model.util.ElementScanner6;
 
-import org.opencv.core.Mat;
+//import org.opencv.core.Mat;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
+//import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -129,7 +129,7 @@ public class Drive extends SubsystemBase {
             
                 if(Math.abs(angleError) > 25)
                 {
-                    speed = speed;
+                    //speed = speed;
                 }    
                 else
                 {
@@ -202,10 +202,10 @@ public class Drive extends SubsystemBase {
     public double getError(double targetAngle) {
 
         double robotError;
-        double angles;
+        //double angles;
         
         //rates  = robot.gyro.getAngularVelocity(AngleUnit.DEGREES);
-        angles = Constants.imu.getYaw();
+        //angles = Constants.imu.getYaw();
         // heading = angles.firstAngle;
 
         // calculate error in -179 to +180 range  (
@@ -219,10 +219,10 @@ public class Drive extends SubsystemBase {
     public void ImuDrive(double distance, double angle, double speed)
     {
        double target = distance;
-       double flug = 0;
+       //double flug = 0;
        double error = 0;
        double steer = 0;
-       double commandalreadyexcepted = 0;
+       //double commandalreadyexcepted = 0;
        double speeddirection = 1;
        double leftspeed = 0;
        double rightspeed = 0;
@@ -238,7 +238,7 @@ public class Drive extends SubsystemBase {
             if(Math.abs(target-CountstoInch(5)) > 20)
             {
                  
-                speed = speed;
+                //speed = speed;
             } 
             else if(Math.abs(target-CountstoInch(5)) < 20)
             {
@@ -296,8 +296,8 @@ public class Drive extends SubsystemBase {
 
         
        
-              double flug = 0;
-              double commandalreadyexcepted = 0;
+              //double flug = 0;
+              //double commandalreadyexcepted = 0;
               double speeddirection = 1;
        
                       if(target>position)
@@ -308,7 +308,7 @@ public class Drive extends SubsystemBase {
                    if(Math.abs(target-position) > 10)
                    {
                         
-                       speed = speed;
+                       //speed = speed;
                        new_speed = outer_circle_radius/inner_circle_radius*speed;
                    } 
                    else if(Math.abs(target-position) < 10)
@@ -349,8 +349,8 @@ public class Drive extends SubsystemBase {
       public void EncoderDrive(double distance, double speed)
       {
             double target = distance;
-            double flug = 0;
-            double commandalreadyexcepted = 0;
+            //double flug = 0;
+            //double commandalreadyexcepted = 0;
             double speeddirection = 1;
                     
             if(target>CountstoInch(1))
@@ -361,7 +361,7 @@ public class Drive extends SubsystemBase {
             if(Math.abs(target-CountstoInch(5)) > 10)
              {
                                      
-                speed = speed;
+                //speed = speed;
              } 
             else if(Math.abs(target-CountstoInch(5)) < 10)
              {
@@ -417,7 +417,8 @@ public class Drive extends SubsystemBase {
            case average:
            double main = getZeroedEncoder(M_getZeroedEncoder.right) + getZeroedEncoder(M_getZeroedEncoder.left)/2;
            return main;
-         
+
+           default:
          }
          return 0;
     }

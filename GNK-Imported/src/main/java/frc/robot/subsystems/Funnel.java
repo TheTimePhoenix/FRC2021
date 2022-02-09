@@ -3,13 +3,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Robot;
+//import frc.robot.Robot;
 
     public class Funnel extends SubsystemBase {
 
@@ -26,11 +26,11 @@ import frc.robot.Robot;
         private final AnalogInput Stage3 = Constants.Stage3;
 
         //The voltage value for each ir sensor to detect a ball's presence
-        private final double ballVolt1 = 1.5;
-        private final double ballVolt2 = 2;
-        private final double ballVolt3 = 1.4;
-        private final double ballVolt4 = 1.4;
-        private final double ballVolt5 = 1.5;
+        //private final double ballVolt1 = 1.5;
+        //private final double ballVolt2 = 2;
+        //private final double ballVolt3 = 1.4;
+        //private final double ballVolt4 = 1.4;
+        //private final double ballVolt5 = 1.5;
 
         
 

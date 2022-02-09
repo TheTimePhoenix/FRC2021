@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.trajectory.Trajectory.State;
+//import edu.wpi.first.wpilibj.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.Shooter;
@@ -57,6 +57,8 @@ public class TurretCommand extends CommandBase {
       break;
       case negninety:
       boom.angleposition(-90);
+      break;
+      default:
       break;
     }
   }

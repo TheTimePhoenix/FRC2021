@@ -14,7 +14,7 @@ public class StickDrive extends CommandBase {
 
 	static final double DEADZONE = .07;
 
-	private final double veeringDeadzone = 0.1;
+	//private final double veeringDeadzone = 0.1;
 
 	public class JoystickResponseCurve {
 		double adjust;
