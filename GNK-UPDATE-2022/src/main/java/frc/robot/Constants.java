@@ -1,5 +1,6 @@
 package frc.robot;
 
+
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -8,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.music.Orchestra;
 import com.kauailabs.navx.frc.AHRS;
+
 import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -15,8 +17,8 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMax.IdleMode;
-import edu.wpi.first.wpilibj.I2C;
 
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -90,10 +92,11 @@ public class Constants {
     public static ColorSensorV3 colorSensor;
     public static ColorMatch colorMatcher;
 
-    public final static Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-    public final static Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-    public final static Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
-    public final static Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+    // 2022: replaced ColorMatch.makeColor with new Color
+    public final static Color kBlueTarget = new Color(0.143, 0.427, 0.429);
+    public final static Color kGreenTarget = new Color(0.197, 0.561, 0.240);
+    public final static Color kRedTarget = new Color(0.561, 0.232, 0.114);
+    public final static Color kYellowTarget = new Color(0.361, 0.524, 0.113);
 
     public static AnalogInput Stage1;
     public static AnalogInput Stage2;
@@ -160,7 +163,8 @@ public class Constants {
         m_right = new SpeedControllerGroup(spark4, spark5, spark6);
 
         robotDrive = new DifferentialDrive(m_left, m_right);
-        robotDrive.setRightSideInverted(false);
+        // change: must set inversion in MotorController.setInverted(...);
+        // robotDrive.setRightSideInverted(false);
         robotDrive.setSafetyEnabled(false);
 
         leftEncoder = spark1.getAlternateEncoder(kAltEncType, kCPR);

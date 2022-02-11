@@ -18,6 +18,12 @@ import frc.robot.subsystems.ControlPanel.ControlPosition;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+// online import for ctre: https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix-frc2022-latest.json
+// online import for kauailabs navx: https://www.kauailabs.com/dist/frc/2022/navx_frc.json
+// online import for rev robotics: https://software-metadata.revrobotics.com/REVLib.json
+// changes to rev robotics api: https://docs.revrobotics.com/sparkmax/software-resources/spark-max-api-information
+// changes to wpilib: https://docs.wpilib.org/en/stable/docs/yearly-overview/yearly-changelog.html
+// deprecations to wpilib: https://first.wpi.edu/wpilib/allwpilib/docs/release/java/deprecated-list.html
 
 public class Robot extends TimedRobot {
 
