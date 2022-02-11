@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ArmGoToPosition;
 import frc.robot.commands.CPColor;
 import frc.robot.commands.CPDrivePosition;
-import frc.robot.commands.CPRollerRotate;
 import frc.robot.subsystems.ControlPanel.ControlPosition;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
