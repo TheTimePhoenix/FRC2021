@@ -122,7 +122,7 @@ public class Drive extends SubsystemBase {
             
                 if(Math.abs(angleError) > 25)
                 {
-                    speed = speed;
+                    //speed = speed;
                 }    
                 else
                 {
@@ -195,11 +195,6 @@ public class Drive extends SubsystemBase {
     public double getError(double targetAngle) {
 
         double robotError;
-        double angles;
-        
-        //rates  = robot.gyro.getAngularVelocity(AngleUnit.DEGREES);
-        angles = Constants.imu.getYaw();
-        // heading = angles.firstAngle;
 
         // calculate error in -179 to +180 range  (
         robotError = targetAngle - Constants.imu.getYaw();
@@ -212,10 +207,8 @@ public class Drive extends SubsystemBase {
     public void ImuDrive(double distance, double angle, double speed)
     {
        double target = distance;
-       double flug = 0;
        double error = 0;
        double steer = 0;
-       double commandalreadyexcepted = 0;
        double speeddirection = 1;
        double leftspeed = 0;
        double rightspeed = 0;
@@ -230,8 +223,7 @@ public class Drive extends SubsystemBase {
         
             if(Math.abs(target-CountstoInch(5)) > 20)
             {
-                 
-                speed = speed;
+                //speed = speed;
             } 
             else if(Math.abs(target-CountstoInch(5)) < 20)
             {
@@ -289,8 +281,6 @@ public class Drive extends SubsystemBase {
 
         
        
-              double flug = 0;
-              double commandalreadyexcepted = 0;
               double speeddirection = 1;
        
                       if(target>position)
@@ -300,8 +290,7 @@ public class Drive extends SubsystemBase {
                
                    if(Math.abs(target-position) > 10)
                    {
-                        
-                       speed = speed;
+                       //speed = speed;
                        new_speed = outer_circle_radius/inner_circle_radius*speed;
                    } 
                    else if(Math.abs(target-position) < 10)
@@ -342,8 +331,6 @@ public class Drive extends SubsystemBase {
       public void EncoderDrive(double distance, double speed)
       {
             double target = distance;
-            double flug = 0;
-            double commandalreadyexcepted = 0;
             double speeddirection = 1;
                     
             if(target>CountstoInch(1))
@@ -352,9 +339,8 @@ public class Drive extends SubsystemBase {
              }
                             
             if(Math.abs(target-CountstoInch(5)) > 10)
-             {
-                                     
-                speed = speed;
+             {              
+                // speed = speed;
              } 
             else if(Math.abs(target-CountstoInch(5)) < 10)
              {
@@ -399,18 +385,17 @@ public class Drive extends SubsystemBase {
     {
         switch(state)
          {
-           case left:
-           offset1 = Constants.leftEncoder.getPosition();
-           return Constants.leftEncoder.getPosition() - offset1;
-          
-           case right:
-           offset2 = Constants.rightEncoder.getPosition();
-           return Constants.rightEncoder.getPosition() - offset1;
-       
-           case average:
-           double main = getZeroedEncoder(M_getZeroedEncoder.right) + getZeroedEncoder(M_getZeroedEncoder.left)/2;
-           return main;
-         
+            case left:
+                offset1 = Constants.leftEncoder.getPosition();
+                return Constants.leftEncoder.getPosition() - offset1;
+            case right:
+                offset2 = Constants.rightEncoder.getPosition();
+                return Constants.rightEncoder.getPosition() - offset1;
+            case average:
+                double main = getZeroedEncoder(M_getZeroedEncoder.right) + getZeroedEncoder(M_getZeroedEncoder.left)/2;
+                return main;
+            case inch:
+                break;
          }
          return 0;
     }

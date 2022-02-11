@@ -31,32 +31,34 @@ public class TurretCommand extends CommandBase {
     switch(State)
     {
       case Spin:
-      boom.setTurretPower(0.7);
-      break;
+        boom.setTurretPower(0.7);
+        break;
       case ReverseSpin:
-      boom.setTurretPower(-0.7);
-      break;
+        boom.setTurretPower(-0.7);
+        break;
       case Stop:
-      boom.setTurretPower(0);
-      break;
+        boom.setTurretPower(0);
+        break;
       case Reset:
-      boom.setencpos(0);
-      break;
+        boom.setencpos(0);
+        break;
       case ninety:
-      boom.angleposition(90);
-      break;
+        boom.angleposition(90);
+        break;
       case fortyfive:
-      boom.angleposition(45);
-      break;
+        boom.angleposition(45);
+        break;
       case zero:
-      boom.angleposition(0);
-      break;
+        boom.angleposition(0);
+        break;
       case negfortyfive:
-      boom.angleposition(-45);
-      break;
+        boom.angleposition(-45);
+        break;
       case negninety:
-      boom.angleposition(-90);
-      break;
+        boom.angleposition(-90);
+        break;
+      case limeylight:
+        break;
     }
   }
 

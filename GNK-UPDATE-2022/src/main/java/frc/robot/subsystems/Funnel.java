@@ -12,7 +12,7 @@ import frc.robot.Constants;
     public class Funnel extends SubsystemBase {
 
         public enum FunnelState {Collect, Remove, Stop};
-
+ 
         private final TalonSRX Roller1 = Constants.Roller1;
         private final VictorSPX Roller2 = Constants.Roller2;
         private final VictorSPX Intake = Constants.Intake;
@@ -22,16 +22,6 @@ import frc.robot.Constants;
         private final AnalogInput Stage1 = Constants.Stage1;
         private final AnalogInput Stage2 = Constants.Stage2;
         private final AnalogInput Stage3 = Constants.Stage3;
-
-        //The voltage value for each ir sensor to detect a ball's presence
-        private final double ballVolt1 = 1.5;
-        private final double ballVolt2 = 2;
-        private final double ballVolt3 = 1.4;
-        private final double ballVolt4 = 1.4;
-        private final double ballVolt5 = 1.5;
-
-        
-
 
         public Funnel () {
 

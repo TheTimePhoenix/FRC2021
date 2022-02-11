@@ -78,7 +78,7 @@ public class Shooter extends SubsystemBase {
 
       angleposition(offset);
 
-      county.delay(1);
+      Timer.delay(1);
       
     }
   }
